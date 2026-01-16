@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Conserto de Impressoras - Soluções Rápidas</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary: #1e40af;
+        --secondary: #3b82f6;
+        --accent: #ef4444;
+        --dark: #111827;
+        --light: #f9fafb;
+        --success: #10b981;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Inter", sans-serif;
+        color: var(--dark);
+        background: var(--light);
+        line-height: 1.6;
+      }
+      .navbar {
+        background: var(--primary);
+        padding: 1rem 0;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+      }
+      .navbar-brand {
+        font-weight: 700;
+        font-size: 1.6rem;
+        color: white;
+      }
+      .nav-link {
+        color: white !important;
+        font-weight: 500;
+        transition: color 0.3s;
+      }
+      .nav-link:hover {
+        color: var(--secondary) !important;
+      }
+      .hero {
+        background:
+          linear-gradient(rgba(30, 64, 175, 0.85), rgba(30, 64, 175, 0.85)),
+          url("https://images.unsplash.com/photo-1580587771525-78b9d3f8d0c0?w=1920");
+        background-size: cover;
+        background-position: center;
+        color: white;
+        padding: 180px 0 120px;
+        text-align: center;
+      }
+      .hero h1 {
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+      }
+      .hero p {
+        font-size: 1.3rem;
+        max-width: 700px;
+        margin: 0 auto 2rem;
+      }
+      .btn-hero {
+        background: var(--secondary);
+        color: white;
+        padding: 14px 40px;
+        border-radius: 50px;
+        font-weight: 600;
+        transition: all 0.3s;
+        box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+      }
+      .btn-hero:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(59, 130, 246, 0.5);
+      }
+      .section {
+        padding: 100px 0;
+      }
+      .section-title {
+        text-align: center;
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 3rem;
+        position: relative;
+      }
+      .section-title::after {
+        content: "";
+        position: absolute;
+        bottom: -15px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background: var(--secondary);
+        border-radius: 2px;
+      }
+      .service-card {
+        background: white;
+        border-radius: 15px;
+        padding: 2.5rem 1.8rem;
+        text-align: center;
+        transition: all 0.4s ease;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        border: 1px solid #eee;
+      }
+      .service-card:hover {
+        transform: translateY(-15px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      }
+      .service-icon {
+        font-size: 3.5rem;
+        color: var(--secondary);
+        margin-bottom: 1.5rem;
+      }
+      footer {
+        background: var(--dark);
+        color: white;
+        padding: 60px 0 30px;
+        text-align: center;
+      }
+
+      /* Chatbot Flutuante */
+      #chatToggleBtn {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 70px;
+        height: 70px;
+        background: var(--accent);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        font-size: 1.8rem;
+        box-shadow: 0 8px 25px rgba(231, 76, 60, 0.4);
+        z-index: 1000;
+        transition: all 0.3s;
+        cursor: pointer;
+      }
+      #chatToggleBtn:hover {
+        transform: scale(1.1);
+      }
+      #chatContainer {
+        position: fixed;
+        bottom: 100px;
+        right: 30px;
+        width: 380px;
+        height: 520px;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        z-index: 999;
+        transition: all 0.3s ease;
+      }
+      #chatHeader {
+        background: var(--primary);
+        color: white;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      #chatBody {
+        flex: 1;
+        overflow-y: auto;
+        padding: 20px;
+        background: #f8f9fa;
+      }
+      .message {
+        margin-bottom: 15px;
+        padding: 12px 18px;
+        border-radius: 18px;
+        max-width: 80%;
+        word-wrap: break-word;
+      }
+      .user-message {
+        background: var(--secondary);
+        color: white;
+        margin-left: auto;
+      }
+      .bot-message {
+        background: #e9ecef;
+        color: var(--dark);
+        margin-right: auto;
+      }
+      #chatInputContainer {
+        display: flex;
+        padding: 15px;
+        background: white;
+        border-top: 1px solid #ddd;
+      }
+      #chatInput {
+        flex: 1;
+        padding: 12px 18px;
+        border: 1px solid #ccc;
+        border-radius: 30px;
+        outline: none;
+      }
+      #chatSendBtn {
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        margin-left: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Botão flutuante para abrir o chat -->
+    <button id="chatToggleBtn"><i class="fas fa-headset"></i></button>
+
+    <!-- Container do Chat -->
+    <div id="chatContainer" style="display: none">
+      <div id="chatHeader">
+        <h5 class="mb-0">Assistente IA de Impressoras</h5>
+        <button id="chatCloseBtn" class="btn btn-sm btn-light">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div id="chatBody">
+        <div class="message bot-message">
+          Olá! Sou o assistente de IA especializado em conserto de impressoras.
+          Como posso ajudar com seu erro ou dúvida hoje?
+        </div>
+      </div>
+      <div id="chatInputContainer">
+        <input type="text" id="chatInput" placeholder="Digite sua dúvida..." />
+        <button id="chatSendBtn"><i class="fas fa-paper-plane"></i></button>
+      </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="#">Impressora Pro</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#home">Início</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#servicos">Serviços</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#tutoriais">Tutoriais</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#sobre">Sobre</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#contato">Contato</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <section id="home" class="hero">
+      <div class="container">
+        <h1>Conserto de Impressoras Profissional</h1>
+        <p>
+          Soluções rápidas, confiáveis e com garantia para todos os modelos.
+        </p>
+        <a href="#contato" class="btn btn-hero btn-lg"
+          >Solicite Orçamento Gratuito</a
+        >
+      </div>
+    </section>
+
+    <!-- Serviços -->
+    <section id="servicos" class="section bg-light">
+      <div class="container">
+        <h2 class="section-title">Nossos Serviços</h2>
+        <div class="row g-4">
+          <div class="col-lg-4 col-md-6">
+            <div class="service-card text-center p-4">
+              <i class="fas fa-tools fa-4x mb-3 text-primary"></i>
+              <h4>Reparo Completo</h4>
+              <p>Diagnóstico preciso e conserto de hardware.</p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <div class="service-card text-center p-4">
+              <i class="fas fa-print fa-4x mb-3 text-primary"></i>
+              <h4>Manutenção Preventiva</h4>
+              <p>Limpeza profunda e calibração para evitar falhas.</p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <div class="service-card text-center p-4">
+              <i class="fas fa-headset fa-4x mb-3 text-primary"></i>
+              <h4>Suporte Remoto</h4>
+              <p>Ajuda online para erros simples e configuração.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // Groq API com sua chave real
+      const GROQ_API_KEY =
+        "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";
+      const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions";
+
+      // Toggle chat
+      document.getElementById("chatToggleBtn").addEventListener("click", () => {
+        document.getElementById("chatContainer").style.display = "flex";
+      });
+
+      document.getElementById("chatCloseBtn").addEventListener("click", () => {
+        document.getElementById("chatContainer").style.display = "none";
+      });
+
+      // Enviar mensagem
+      document
+        .getElementById("chatSendBtn")
+        .addEventListener("click", sendMessage);
+      document.getElementById("chatInput").addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          sendMessage();
+        }
+      });
+
+      async function sendMessage() {
+        const input = document.getElementById("chatInput");
+        const message = input.value.trim();
+        if (!message) return;
+
+        addMessage("user-message", message);
+        input.value = "";
+
+        const typingMsg = addMessage("bot-message", "Digitando...");
+
+        try {
+          const response = await fetch(GROQ_API_URL, {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${GROQ_API_KEY}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              model: "llama-3.3-70b-versatile",
+              messages: [
+                {
+                  role: "system",
+                  content:
+                    "Você é um especialista em conserto de impressoras. Responda de forma clara, técnica e passo a passo em português. Seja útil, direto e educado.",
+                },
+                {
+                  role: "user",
+                  content: message,
+                },
+              ],
+              temperature: 0.7,
+              max_tokens: 1024,
+              top_p: 1,
+              stream: false,
+            }),
+          });
+
+          if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`Erro HTTP ${response.status}: ${errorText}`);
+          }
+
+          const data = await response.json();
+          const reply = data.choices[0].message.content;
+
+          typingMsg.remove();
+          addMessage("bot-message", reply);
+        } catch (error) {
+          typingMsg.remove();
+          addMessage(
+            "bot-message",
+            "Erro ao conectar com a IA. Detalhe: " + error.message,
+          );
+          console.error(error);
+        }
+      }
+
+      function addMessage(className, text) {
+        const chatBody = document.getElementById("chatBody");
+        const msgDiv = document.createElement("div");
+        msgDiv.className = `message ${className}`;
+        msgDiv.innerHTML = text.replace(/\n/g, "<br>");
+        chatBody.appendChild(msgDiv);
+        chatBody.scrollTop = chatBody.scrollHeight;
+        return msgDiv;
+      }
+    </script>
+  </body>
+</html>
